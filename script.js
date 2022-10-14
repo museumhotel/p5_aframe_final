@@ -70,7 +70,7 @@ function convertLineToFirstSingleWordsArray(textLine) {
   //console.log(typeof stringedLine);
   let words = textLine.split(" ");
 
-  let stringedLine = words.toString((s) => s.slice(0));
+  let stringedLine = words.toString();
   //console.log(s));
 
   //let commalessWords = words.toString().replace(/,/g, " ");
