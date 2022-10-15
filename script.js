@@ -156,10 +156,6 @@ function setup() {
 
   hydraCanvasTouched = false;
 
-  hBuffer = createGraphics(256, 256);
-
-  hTexture = world.createDynamicTextureFromCreateGraphics(hBuffer);
-
   // create some geometry to add to our marker
 
   basePlane = new Plane({
@@ -168,15 +164,14 @@ function setup() {
     x: 0,
     y: 0,
     z: 0,
-    rotationX: -90,
+    rotationY: -0.1,
     asset: texture1,
     dynamicTexture: true,
     dynamicTextureWidth: 512,
     dynamicTextureHeight: 512,
     side: "front",
     opacity: 0.75,
-    clickFunction: function () {
-      //playSound();
+    clickFunction: function (e) {
       hydraCanvasTouched = true;
     },
   });
@@ -188,13 +183,13 @@ function setup() {
     x: 0,
     y: 0,
     z: 0,
-    rotationX: -90,
+    rotationY: -0.1,
     asset: "photo",
     repeatX: 2,
     repeatY: 2,
     side: "double",
     opacity: 1.0,
-    clickFunction: function () {
+    clickFunction: function (e) {
       playSound();
     },
   });
@@ -288,30 +283,22 @@ function drawHydraCanvas() {
 }
 
 function rotatePlanes() {
-  basePlane.spinX(1);
-  planeBackSide.spinX(1);
-  basePlane.spinY(1);
-  planeBackSide.spinY(1);
-  basePlane.rotateZ(1);
-  planeBackSide.rotateZ(1);
+  basePlane.spinX(5);
+  planeBackSide.spinX(5);
+  /*  basePlane.spinY(0.5);
+  planeBackSide.spinY(0.5);
+  basePlane.rotateZ(0.5);
+  planeBackSide.rotateZ(0.5); */
 }
 
 function writeMarriageMessage() {
   push();
-  //buffer1.blendMode(BURN); //HARD_LIGHT
 
+  //change blend mode on touch of hydra plane
   if (hydraCanvasTouched) {
     buffer1.blendMode(HARD_LIGHT);
-    buffer1
-      .fill(random(0, 100), random(0, 100), random(0, 100))
-      .textSize(fontSize);
-    hydraCanvasTouched = false;
-
-    if (hydraCanvasTouched) {
-      buffer1.blendMode(BLEND);
-      console.log(hydraCanvasTouched);
-    }
   }
+
   buffer1.fill(100).textSize(fontSize);
   //line 1
   buffer1.textFont(shareTechMonoFont);
@@ -446,7 +433,7 @@ function draw() {
   //hBuffer.background(200);
 
   //rotate the planes
-  //rotatePlanes();
+  rotatePlanes();
 
   //draw hydra dynamic texture onto buffer
   drawHydraCanvas();
