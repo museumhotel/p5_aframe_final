@@ -70,53 +70,27 @@ let message = {
   x`,
 };
 
+let track;
+
 function convertLineToFirstSingleWordsArray(textLine) {
-  //let commalessWords = stringedLine.replace(/,/g, " ");
-
-  //console.log(typeof stringedLine);
   let splitWords = textLine.split(" ").join(" ");
-
-  //let stringedLine = words.toString();
-  //console.log(s));
-
-  //let commalessWords = words.replaceAll(",", "");
-  //let commalessWords =
-  // splitWords.join(" ");
-
-  //let noCommas = words;
-  // removeCommas(words);
 
   let firstWord = splitWords.split(" ").slice(0, 1);
 
   let secondWord = splitWords.split(" ").slice(1, 2);
 
   let textLinePt1 = `${firstWord} ${secondWord}`;
-  //firstWords.toString().replace(/,/g, "");
 
-  /* function removeCommas(stringArr) {
-    //let commalessWords = stringArr.replace(/,/g, "");
-    //console.log(stringArr);
-    //let firstWords = commalessWords.slice(0, 2);
-    //return firstWords;
-  } */
-
-  //words = firstWords;
-
-  //console.log(firstWords);
   return textLinePt1;
 }
 
 function convertLineToRemainingSingleWordsArray(textLine) {
   let splitWords = textLine.split(" ").join(" ");
 
-  //let commalessWords = words.join(" ").split(" ");
-
   let remainingWords = splitWords.split(" ").slice(2);
 
-  //let textLinePt2 = `${remainingWords}`;
   let textLinePt2 = `${remainingWords.toString().replace(/,/g, "")}`;
 
-  //console.log(lastWords);
   return textLinePt2;
 }
 
@@ -127,10 +101,6 @@ function calculateNumberOfChars(string) {
 
   return stringLength;
 }
-
-//convertLineToFirstSingleWordsArray(message.textLine2);
-//convertLineToRemainingSingleWordsArray(message.textLine2);
-//let splitLine1 = message.textLine1.split("");
 
 function preload() {
   //preload hydra
@@ -179,6 +149,9 @@ function setup() {
   // register this texture as a dynamic (updatable) texture
   texture1 = world.createDynamicTextureFromCreateGraphics(buffer1);
 
+  //load sound asset
+  track = loadSound("sounds/fj_sound.mp3");
+
   hBuffer = createGraphics(256, 256);
 
   hTexture = world.createDynamicTextureFromCreateGraphics(hBuffer);
@@ -198,6 +171,9 @@ function setup() {
     dynamicTextureHeight: 512,
     side: "front",
     opacity: 0.75,
+    clickFunction: function () {
+      playSound();
+    },
   });
   marker.add(basePlane);
 
@@ -213,41 +189,13 @@ function setup() {
     repeatY: 2,
     side: "double",
     opacity: 1.0,
+    clickFunction: function () {
+      playSound();
+    },
   });
   marker.add(planeBackSide);
 
   buffer1.colorMode(HSL);
-
-  /* planeBackSide = basePlane.getSide((s) => {
-    let side = s;
-    side.setSide((front) => {
-      front = "back";
-    });
-    return s;
-    //s = "back";
-    //console.log(s);
-  }); */
-  //basePlane.side.setSide()
-
-  //planeBackSide.setAsset("mMPic");
-  //console.log(basePlane.side);
-  //console.log(planeBackSide);
-
-  /* hydraPlane = new Plane({
-    width: 1,
-    height: 1,
-    x: 0,
-    y: 0,
-    z: 0,
-    rotationX: -90,
-    asset: hTexture,
-    dynamicTexture: true,
-    dynamicTextureWidth: 256,
-    dynamicTextureHeight: 256,
-    side: "double",
-    opacity: 0.7,
-  });
-  marker.add(hydraPlane); */
 
   // Craig: grab a reference to the HTML element where the hydra animation is being rendered
   defaultHydraCanvasElementReference = document.getElementById(
@@ -289,7 +237,7 @@ function drawHydraCanvas() {
   ); */
 
   //hydra synth
-  h.src(h.o0).modulateHue(
+  /* h.src(h.o0).modulateHue(
     h
       .src(h.o0)
       .add(
@@ -308,6 +256,28 @@ function drawHydraCanvas() {
       .repeat(2, 2, -0.25, -0.25)
       //.saturate(1)
       .hue(0.05)
+      .out(h.o0)
+  ); */
+  //adjusted synth
+  h.src(h.o0).modulateHue(
+    h
+      .src(h.o0)
+      .add(
+        h
+          .noise(5, 5, 1)
+          //.brightness(0.95)
+          .diff(h.shape(8, 0.5, 0.2))
+          .color(0.75, 0, 0.25, 1)
+          .scrollX([0.005, -0.005])
+          .scrollY(0.005)
+      )
+      .scrollY((frameCount % height) * 0.01, 1)
+      .blend(h.osc(2, 0.1, 0).thresh(0.5, 0.1).color(0.8, 0.24, 0.54, 0.5))
+      //.colorama(0.05)
+      //.color(0.75, 0, 0.25, 0.15)
+      .repeat(2, 2, -0.25, -0.25)
+      .saturate(0.5)
+      .hue(0.025)
       .out(h.o0)
   );
 }
@@ -347,13 +317,6 @@ function writeMarriageMessage() {
     ((buffer1.width / 4) * calculateNumberOfChars(message.textLine2)) / 4.125,
     buffer1.height / random(3.75, 4) + fontSize
   );
-  //line 2 pt.ii copy
-  /* buffer1.textFont(blueOceanFont);
-  buffer1.text(
-    convertLineToRemainingSingleWordsArray(message.textLine2),
-    (buffer1.width / 4) * calculateNumberOfChars(message.textLine2) * 1.35,
-    buffer1.height / random(3.75, 4) + fontSize
-  ); */
   //line 3 pt.i
   buffer1.textFont(emperanFont);
   buffer1.text(
@@ -485,6 +448,15 @@ function draw() {
     if (heartsArray[i].finished()) {
       heartsArray.splice(i, 1);
     }
+  }
+}
+
+function playSound() {
+  if (track.isPlaying()) {
+    // .isPlaying() returns a boolean
+    track.stop();
+  } else {
+    track.play();
   }
 }
 
