@@ -72,6 +72,8 @@ let message = {
 
 let track;
 
+let hydraCanvasTouched;
+
 function convertLineToFirstSingleWordsArray(textLine) {
   let splitWords = textLine.split(" ").join(" ");
 
@@ -152,6 +154,8 @@ function setup() {
   //load sound asset
   track = loadSound("sounds/fj_sound.mp3");
 
+  hydraCanvasTouched = false;
+
   hBuffer = createGraphics(256, 256);
 
   hTexture = world.createDynamicTextureFromCreateGraphics(hBuffer);
@@ -172,7 +176,8 @@ function setup() {
     side: "front",
     opacity: 0.75,
     clickFunction: function () {
-      playSound();
+      //playSound();
+      hydraCanvasTouched = true;
     },
   });
   marker.add(basePlane);
@@ -293,8 +298,20 @@ function rotatePlanes() {
 
 function writeMarriageMessage() {
   push();
-  buffer1.blendMode(HARD_LIGHT); //HARD_LIGHT
+  //buffer1.blendMode(BURN); //HARD_LIGHT
 
+  if (hydraCanvasTouched) {
+    buffer1.blendMode(HARD_LIGHT);
+    buffer1
+      .fill(random(0, 100), random(0, 100), random(0, 100))
+      .textSize(fontSize);
+    hydraCanvasTouched = false;
+
+    if (hydraCanvasTouched) {
+      buffer1.blendMode(BLEND);
+      console.log(hydraCanvasTouched);
+    }
+  }
   buffer1.fill(100).textSize(fontSize);
   //line 1
   buffer1.textFont(shareTechMonoFont);
