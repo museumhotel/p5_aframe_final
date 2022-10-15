@@ -45,22 +45,28 @@ let miaouFont;
 let starMunchiesFont;
 let technoLinesFont;
 let typevaFont;
+//extra fonts
+let alexandriaFont;
+let camelotFont;
+let refinestFont;
+let roughTypewriterFont;
+let vertigoFont;
+let emberanFont;
 
 //text
-
 let fontSize = 30;
 
 let message = {
   textLine1: "Alhamdulillah!",
   textLine2: "congrats to the",
   textLine3: "most beautiful couple",
-  textLine4: "in the world,",
+  textLine4: "in the world-",
   textLine5: "Maisha and Muhammad",
-  textLine6: "may you have",
-  textLine7: "an eternal lifetime",
-  textLine8: "of blessings together",
-  textLine9: `-love from,
-  david 
+  textLine6: "may you have-",
+  textLine7: "a lifetime together",
+  textLine8: "full of blessings",
+  textLine9: `-love from, 
+  david
   x`,
 };
 
@@ -107,7 +113,8 @@ function convertLineToRemainingSingleWordsArray(textLine) {
 
   let remainingWords = splitWords.split(" ").slice(2);
 
-  let textLinePt2 = `${remainingWords}`;
+  //let textLinePt2 = `${remainingWords}`;
+  let textLinePt2 = `${remainingWords.toString().replace(/,/g, "")}`;
 
   //console.log(lastWords);
   return textLinePt2;
@@ -150,6 +157,13 @@ function preload() {
   starMunchiesFont = loadFont("fonts/starmunchies.ttf");
   technoLinesFont = loadFont("fonts/Technolines.ttf");
   typevaFont = loadFont("fonts/typeva.otf");
+  //fonts++
+  alexandriaFont = loadFont("fonts/alexandria.ttf");
+  camelotFont = loadFont("fonts/Camelot-Regular.ttf");
+  refinestFont = loadFont("fonts/RefinestPersonalUe-DOPK9.otf");
+  roughTypewriterFont = loadFont("fonts/rough_typewriter.otf");
+  vertigoFont = loadFont("fonts/Vertigo.ttf");
+  emberanFont = loadFont("fonts/Emberan-4B2W6.otf");
 }
 
 function setup() {
@@ -330,7 +344,7 @@ function writeMarriageMessage() {
   buffer1.textFont(blueOceanFont);
   buffer1.text(
     convertLineToRemainingSingleWordsArray(message.textLine2),
-    ((buffer1.width / 4) * calculateNumberOfChars(message.textLine2)) / 4,
+    ((buffer1.width / 4) * calculateNumberOfChars(message.textLine2)) / 4.125,
     buffer1.height / random(3.75, 4) + fontSize
   );
   //line 2 pt.ii copy
@@ -351,7 +365,7 @@ function writeMarriageMessage() {
   buffer1.textFont(fauvesBookFont);
   buffer1.text(
     convertLineToRemainingSingleWordsArray(message.textLine3),
-    (buffer1.width / 4) * calculateNumberOfChars(message.textLine3) * 1.2,
+    ((buffer1.width / 4) * calculateNumberOfChars(message.textLine3)) / 6.5,
     buffer1.height / random(3.75, 4) + fontSize * 2
   );
   //line 4 pt.i
@@ -365,43 +379,82 @@ function writeMarriageMessage() {
   buffer1.textFont(galacticaFont);
   buffer1.text(
     convertLineToRemainingSingleWordsArray(message.textLine4),
-    (buffer1.width / 4) * calculateNumberOfChars(message.textLine4) * 1.35,
+    ((buffer1.width / 4) * calculateNumberOfChars(message.textLine4)) / 3.75,
     buffer1.height / random(3.75, 4) + fontSize * 3
   );
-  //line 5
+  //line 5 pt.i
   buffer1.textFont(dzodongFont);
   buffer1.text(
-    message.textLine5,
+    convertLineToFirstSingleWordsArray(message.textLine5),
     buffer1.width / random(3.75, 4),
     buffer1.height / 4 + fontSize * 4
   );
-  //line 6
+  //line 5 pt.ii
+  buffer1.textFont(gamerFont);
+  buffer1.text(
+    convertLineToRemainingSingleWordsArray(message.textLine5),
+    ((buffer1.width / random(3.75, 4)) *
+      calculateNumberOfChars(message.textLine5)) /
+      4.5,
+    buffer1.height / 4 + fontSize * 4
+  );
+  //line 6 pt.i
   buffer1.textFont(thinBabyFont);
   buffer1.text(
-    message.textLine6,
+    convertLineToFirstSingleWordsArray(message.textLine6),
     buffer1.width / 4,
     buffer1.height / random(3.75, 4) + fontSize * 5
   );
-  //line 7
-  buffer1.textFont(thinBabyFont);
+  //line 6 pt.ii
+  buffer1.textFont(miaouFont);
   buffer1.text(
-    message.textLine7,
+    convertLineToRemainingSingleWordsArray(message.textLine6),
+    ((buffer1.width / 4) * calculateNumberOfChars(message.textLine6)) / 3.75,
+    buffer1.height / random(3.75, 4) + fontSize * 5
+  );
+  //line 7 pt.i
+  buffer1.textFont(refinestFont);
+  buffer1.text(
+    convertLineToFirstSingleWordsArray(message.textLine7),
     buffer1.width / 4,
     buffer1.height / random(3.75, 4) + fontSize * 6
   );
-  //line 8
-  buffer1.textFont(thinBabyFont);
+  //line 7 pt.ii
+  buffer1.textFont(vertigoFont);
   buffer1.text(
-    message.textLine8,
-    buffer1.width / 4,
+    convertLineToRemainingSingleWordsArray(message.textLine7),
+    ((buffer1.width / 4) * calculateNumberOfChars(message.textLine7)) / 5.25,
     buffer1.height / random(3.75, 4) + fontSize * 6
   );
-  //line 9
-  buffer1.textFont(thinBabyFont);
+  //line 8 pt.i
+  buffer1.textFont(alexandriaFont);
   buffer1.text(
-    message.textLine9,
+    convertLineToFirstSingleWordsArray(message.textLine8),
     buffer1.width / 4,
-    buffer1.height / random(3.75, 4) + fontSize * 6
+    buffer1.height / random(3.75, 4) + fontSize * 7
+  );
+  //line 8 pt.ii
+  buffer1.textFont(camelotFont);
+  buffer1.text(
+    convertLineToRemainingSingleWordsArray(message.textLine8),
+    ((buffer1.width / 4) * calculateNumberOfChars(message.textLine8)) / 4.25,
+    buffer1.height / random(3.75, 4) + fontSize * 7
+  );
+  //line 9 pt.i
+  buffer1.textFont(emberanFont);
+  buffer1.text(
+    convertLineToFirstSingleWordsArray(message.textLine9),
+    buffer1.width / 4,
+    buffer1.height / random(3.75, 4) + fontSize * 8
+  );
+  //line 9 pt.ii
+  buffer1.textFont(roughTypewriterFont);
+  buffer1.text(
+    convertLineToRemainingSingleWordsArray(
+      message.textLine9.toString().replaceAll(",", "")
+    ),
+    ((buffer1.width / 4) * calculateNumberOfChars(message.textLine9)) / 4.75,
+    buffer1.height / random(3.75, 4) + fontSize * 8
   );
 
   pop();
