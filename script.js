@@ -68,19 +68,24 @@ function convertLineToFirstSingleWordsArray(textLine) {
   //let commalessWords = stringedLine.replace(/,/g, " ");
 
   //console.log(typeof stringedLine);
-  let words = textLine.split(" ");
+  let splitWords = textLine.split(" ").join(" ");
 
-  let stringedLine = words.toString();
+  //let stringedLine = words.toString();
   //console.log(s));
 
-  //let commalessWords = words.toString().replace(/,/g, " ");
-
   //let commalessWords = words.replaceAll(",", "");
+  //let commalessWords =
+  // splitWords.join(" ");
 
   //let noCommas = words;
   // removeCommas(words);
 
-  let firstWords = stringedLine.slice(0, 2);
+  let firstWord = splitWords.split(" ").slice(0, 1);
+
+  let secondWord = splitWords.split(" ").slice(1, 2);
+
+  let textLinePt1 = `${firstWord} ${secondWord}`;
+  //firstWords.toString().replace(/,/g, "");
 
   /* function removeCommas(stringArr) {
     //let commalessWords = stringArr.replace(/,/g, "");
@@ -92,16 +97,20 @@ function convertLineToFirstSingleWordsArray(textLine) {
   //words = firstWords;
 
   //console.log(firstWords);
-  return firstWords;
+  return textLinePt1;
 }
 
 function convertLineToRemainingSingleWordsArray(textLine) {
-  let words = textLine.split(" ");
+  let splitWords = textLine.split(" ").join(" ");
 
-  let remainingWords = words.slice(2);
+  //let commalessWords = words.join(" ").split(" ");
+
+  let remainingWords = splitWords.split(" ").slice(2);
+
+  let textLinePt2 = `${remainingWords}`;
 
   //console.log(lastWords);
-  return remainingWords;
+  return textLinePt2;
 }
 
 function calculateNumberOfChars(string) {
@@ -321,9 +330,16 @@ function writeMarriageMessage() {
   buffer1.textFont(blueOceanFont);
   buffer1.text(
     convertLineToRemainingSingleWordsArray(message.textLine2),
-    (buffer1.width / 4) * calculateNumberOfChars(message.textLine2) * 1.35,
+    ((buffer1.width / 4) * calculateNumberOfChars(message.textLine2)) / 4,
     buffer1.height / random(3.75, 4) + fontSize
   );
+  //line 2 pt.ii copy
+  /* buffer1.textFont(blueOceanFont);
+  buffer1.text(
+    convertLineToRemainingSingleWordsArray(message.textLine2),
+    (buffer1.width / 4) * calculateNumberOfChars(message.textLine2) * 1.35,
+    buffer1.height / random(3.75, 4) + fontSize
+  ); */
   //line 3 pt.i
   buffer1.textFont(emperanFont);
   buffer1.text(
