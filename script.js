@@ -262,21 +262,21 @@ function drawHydraCanvas() {
   h.src(h.o0).modulateHue(
     h
       .src(h.o0)
-      .add(
+      .layer(
         h
           .noise(5, 5, 1)
           //.brightness(0.95)
-          .diff(h.shape(8, 0.5, 0.2))
+          .mask(h.shape(8, 0.5, 0.1))
           .color(0.75, 0, 0.25, 1)
           .scrollX([0.005, -0.005])
           .scrollY(0.005)
       )
       .scrollY((frameCount % height) * 0.01, 1)
-      .blend(h.osc(2, 0.1, 0).thresh(0.5, 0.1).color(0.8, 0.24, 0.54, 0.5))
-      //.colorama(0.05)
+      .blend(h.osc(4, 0.0001, 0).thresh(0.5, 0.1).color(0.8, 0.24, 0.54, 0.5))
+      //.colorama(0.001)
       //.color(0.75, 0, 0.25, 0.15)
       .repeat(2, 2, -0.25, -0.25)
-      .saturate(0.5)
+      //.saturate(0.5)
       .hue(0.025)
       .out(h.o0)
   );
